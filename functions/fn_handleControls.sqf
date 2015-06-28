@@ -25,6 +25,7 @@ if (A3G_Spectatorcam_var_pressedKeys select DIK_D) then {
 };
 
 _movementDelta set [2, 0];
+_movementDelta = vectorNormalized _movementDelta;
 
 if (A3G_Spectatorcam_var_pressedKeys select DIK_Q) then {
 	_movementDelta = _movementDelta vectorAdd [0, 0, 0.5];

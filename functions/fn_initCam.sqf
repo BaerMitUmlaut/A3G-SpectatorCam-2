@@ -31,6 +31,15 @@ A3G_Spectatorcam_var_cameraObject setVectorDirAndUp A3G_Spectatorcam_var_vectorD
 A3G_Spectatorcam_var_cameraObject cameraEffect ["External", "BACK"];
 A3G_Spectatorcam_var_cameraObject camCommit 0;
 
+A3G_Spectatorcam_var_unblockedKeys = [DIK_ESCAPE];
+if (A3G_Spectatorcam_set_allowChatting) then {
+	A3G_Spectatorcam_var_unblockedKeys append (actionKeys "Chat");
+	A3G_Spectatorcam_var_unblockedKeys append (actionKeys "NextChannel");
+	A3G_Spectatorcam_var_unblockedKeys append (actionKeys "PrevChannel");
+};
+A3G_Spectatorcam_var_dialogOpen = false;
+A3G_Spectatorcam_var_inSelectionMode = false;
+
 A3G_Spectatorcam_var_onKeyDown = [];
 A3G_Spectatorcam_var_onKeyDown set [0xED, {}];
 for "_i" from 0 to 0xEC do {
@@ -38,16 +47,34 @@ for "_i" from 0 to 0xEC do {
 };
 
 A3G_Spectatorcam_var_onKeyDown set [DIK_U, {A3G_Spectatorcam_set_showUI = !A3G_Spectatorcam_set_showUI;}];
+A3G_Spectatorcam_var_onKeyDown set [DIK_M, {
+	if (!A3G_Spectatorcam_var_dialogOpen) then {
+		createDialog "dlgA3GSpectatorcamMap";
+	};
+}];
+A3G_Spectatorcam_var_onKeyDown set [DIK_P, {
+	if (!A3G_Spectatorcam_var_dialogOpen) then {
+		createDialog "dlgA3GSpectatorcamPreferences";
+	};
+}];
+A3G_Spectatorcam_var_onKeyDown set [DIK_H, {
+	if (!A3G_Spectatorcam_var_dialogOpen) then {
+		createDialog "dlgA3GSpectatorcamHelp";
+	};
+}];
+A3G_Spectatorcam_var_onKeyDown set [DIK_SPACE, {
+	if (!A3G_Spectatorcam_var_dialogOpen) then {
+		A3G_Spectatorcam_var_inSelectionMode = true;
+		createDialog "dlgA3GSpectatorcamDummy";
+	};
+}];
 
 (findDisplay 46) displayAddEventHandler ["KeyDown", {
 	A3G_Spectatorcam_var_pressedKeys set [(_this select 1), true];
 	[] call (A3G_Spectatorcam_var_onKeyDown select (_this select 1));
 
-	if ((_this select 1) in A3G_Spectatorcam_var_unblockedKeys) then {
-		false
-	} else {
-		true
-	};
+	if ((_this select 1) in A3G_Spectatorcam_var_unblockedKeys) exitWith {false};
+	true
 }];
 
 A3G_Spectatorcam_var_onKeyUp = [];
@@ -56,11 +83,18 @@ for "_i" from 0 to 0xEC do {
 	A3G_Spectatorcam_var_onKeyUp set [_i, {}];
 };
 
+A3G_Spectatorcam_var_onKeyUp set [DIK_SPACE, {
+	if (A3G_Spectatorcam_var_inSelectionMode) then {
+		closeDialog 0;
+		A3G_Spectatorcam_var_inSelectionMode = false;
+	};
+}];
+
 (findDisplay 46) displayAddEventHandler ["KeyUp", {
 	A3G_Spectatorcam_var_pressedKeys set [(_this select 1), false];
 	[] call (A3G_Spectatorcam_var_onKeyUp select (_this select 1));
 
-	if ((_this select 1) in A3G_Spectatorcam_var_unblockedKeys) then {
+	if ((_this select 1) in A3G_Spectatorcam_var_unblockedKeys || A3G_Spectatorcam_var_dialogOpen) then {
 		false
 	} else {
 		true
@@ -69,12 +103,14 @@ for "_i" from 0 to 0xEC do {
 
 (findDisplay 46) displayAddEventHandler ["MouseMoving", {
 	private ["_deltaX", "_deltaY"];
-	_deltaX = _this select 1;
-	_deltaY = _this select 2;
-	A3G_Spectatorcam_var_cameraDir = A3G_Spectatorcam_var_cameraDir + _deltaX;
-	A3G_Spectatorcam_var_cameraPitch = -89 max (89 min (A3G_Spectatorcam_var_cameraPitch - _deltaY));
-	A3G_Spectatorcam_var_vectorDirAndUp = [A3G_Spectatorcam_var_cameraDir, A3G_Spectatorcam_var_cameraPitch] call A3G_Spectatorcam_fnc_calcVectorDirAndUp;
-	A3G_Spectatorcam_var_vectorDir = A3G_Spectatorcam_var_vectorDirAndUp select 0;
+	if (!A3G_Spectatorcam_var_dialogOpen) then {
+		_deltaX = _this select 1;
+		_deltaY = _this select 2;
+		A3G_Spectatorcam_var_cameraDir = A3G_Spectatorcam_var_cameraDir + _deltaX;
+		A3G_Spectatorcam_var_cameraPitch = -89 max (89 min (A3G_Spectatorcam_var_cameraPitch - _deltaY));
+		A3G_Spectatorcam_var_vectorDirAndUp = [A3G_Spectatorcam_var_cameraDir, A3G_Spectatorcam_var_cameraPitch] call A3G_Spectatorcam_fnc_calcVectorDirAndUp;
+		A3G_Spectatorcam_var_vectorDir = A3G_Spectatorcam_var_vectorDirAndUp select 0;
+	};
 }];
 
 A3G_Spectatorcam_var_pressedKeys = [];

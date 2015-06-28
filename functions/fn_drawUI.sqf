@@ -4,7 +4,7 @@ if (A3G_Spectatorcam_set_showUI) then {
 	showCinemaBorder false;
 	cameraEffectEnableHUD true;
 	{
-		if !(side _x == civilian) then {
+		if !(side group _x == civilian) then {
 			if (A3G_Spectatorcam_set_markEnemies || A3G_Spectatorcam_var_playerSide getFriend (side group _x) > 0.6) then {
 				if (A3G_Spectatorcam_var_cameraObject distance _x < 500) then {
 					_drawColor = [0,0,0,0];
