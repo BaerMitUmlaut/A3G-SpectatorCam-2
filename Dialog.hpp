@@ -95,6 +95,7 @@ class ctrlA3GSpectatorcamFooter : ctrlA3GSpectatorcamText {
 	text = QUOTE(A3G Spectatorcam A3G_SPECTATORCAM_VERSION);
 	style = 2;
 	SizeEx = 0.04;
+	h = 0.05;
 	y = safezoneY + safezoneH - 0.1 * (4/3) - 0.04;
 };
 
@@ -232,9 +233,16 @@ class ctrlA3GSpectatorcamMap : RscMapControl {
 	idc = -1;
 	style = 0;
 	colorOutside[] = {1,1,1,1};
+
 	class Legend {
 		x = safezoneW;
 		y = safezoneH;
+		font = "PuristaMedium";
+		w = 0;
+		h = 0;
+		sizeEx = 0;
+		colorBackground[] = {0,0,0,0};
+		color[] = {0,0,0,0};
 	};
 };
 
