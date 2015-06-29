@@ -27,14 +27,50 @@ class dlgA3GSpectatorcamBase {
 };
 
 class dlgA3GSpectatorcamDummy {
-	onLoad = "A3G_Spectatorcam_var_dialogOpen = true;";
+	onLoad = "A3G_Spectatorcam_var_dialogOpen = true; setMousePosition [0.5, 0.5];";
 	onUnload = "A3G_Spectatorcam_var_dialogOpen = false;";
+	onKeyUp = "if ((_this select 1) == 57) then {A3G_Spectatorcam_var_inSelectionMode = false; closeDialog 0;};";
 	idd = -1;
 	movingEnable = false;
 	enableSimulation = 1;
 	
 	controlsBackground[] = {};
-	controls[] = {};
+	controls[] = {dummy};
+
+	class dummy {
+		idc = -1;
+		access = 0;
+		type = 1;
+		style = 0;
+		x = safezoneX;
+		y = safezoneY;
+		w = safezoneW;
+		h = safezoneH;
+		text = "";
+		font = "PuristaMedium";
+		sizeEx = 0;
+		colorText[] = {0,0,0,0};
+		colorDisabled[] = {0,0,0,0};
+		colorBackground[] = {0,0,0,0};
+		colorBackgroundDisabled[] = {0,0,0,0};
+		colorBackgroundActive[] = {0,0,0,0};
+		offsetX = 0;
+		offsetY = 0;
+		offsetPressedX = 0;
+		offsetPressedY = 0;
+		colorFocused[] = {0,0,0,0};
+		colorShadow[] = {0,0,0,0};
+		shadow = 0;
+		colorBorder[] = {0,0,0,0};
+		borderSize = 0;
+		soundEnter[] = {"",0.1,1};
+		soundPush[] = {"",0.1,1};
+		soundClick[] = {"",0.1,1};
+		soundEscape[] = {"",0.1,1};
+		default = false;
+		onMouseButtonUp = "_this call A3G_Spectatorcam_fnc_onSelection";
+		onMouseMoving = "_this call A3G_Spectatorcam_fnc_onMouseMovingSelectionMode";
+	};
 };
 
 class ctrlA3GSpectatorcamText {
@@ -386,7 +422,8 @@ class dlgA3GSpectatorcamHelp : dlgA3GSpectatorcamBase {
 		ctrlTextHelpKeybindsVision,
 		ctrlTextHelpKeybindsPrevNext,
 		ctrlTextHelpKeybindsPreferences,
-		ctrlTextHelpKeybindsUI
+		ctrlTextHelpKeybindsUI,
+		ctrlTextHelpKeybindsSelectDesc
 	};
 
 	class ctrlHeaderHelp : ctrlA3GSpectatorcamHeader {

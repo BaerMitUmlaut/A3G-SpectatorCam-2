@@ -29,7 +29,9 @@ class CfgFunctions {
 			class initDialogMap {};
 			class initModule {};
 			class onMapClick {};
+			class onMouseMovingSelectionMode {};
 			class onPlayerLBSelect {};
+			class onSelection {};
 			class onSliderOVDChange {};
 			class onSliderVDChange {};
 			class unhidePlayer {};

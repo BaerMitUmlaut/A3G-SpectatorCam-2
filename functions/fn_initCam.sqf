@@ -63,9 +63,13 @@ A3G_Spectatorcam_var_onKeyDown set [DIK_H, {
 	};
 }];
 A3G_Spectatorcam_var_onKeyDown set [DIK_SPACE, {
-	if (!A3G_Spectatorcam_var_dialogOpen) then {
-		A3G_Spectatorcam_var_inSelectionMode = true;
-		createDialog "dlgA3GSpectatorcamDummy";
+	if (!A3G_Spectatorcam_var_inSelectionMode) then {
+		//once the dummy dialog closes, Arma will send a new onKeyDown event for space
+		//by only changing inSelectionMode on the next keyUp, we can circumvent accidentally opening the dialog again
+		if (!A3G_Spectatorcam_var_dialogOpen) then {
+			A3G_Spectatorcam_var_inSelectionMode = true;
+			createDialog "dlgA3GSpectatorcamDummy";
+		};
 	};
 }];
 
@@ -85,7 +89,6 @@ for "_i" from 0 to 0xEC do {
 
 A3G_Spectatorcam_var_onKeyUp set [DIK_SPACE, {
 	if (A3G_Spectatorcam_var_inSelectionMode) then {
-		closeDialog 0;
 		A3G_Spectatorcam_var_inSelectionMode = false;
 	};
 }];

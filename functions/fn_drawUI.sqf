@@ -35,13 +35,13 @@ if (A3G_Spectatorcam_set_showUI) then {
 					if (isFormationLeader _x) then {
 						switch (side group _x) do {
 							case west: {
-								drawIcon3D ["\A3\ui_f\data\map\Markers\NATO\b_unknown.paa", [0,0.3,0.6,0.5], visiblePositionASL _x, 1, 1, 0];
+								drawIcon3D ["\A3\ui_f\data\map\Markers\NATO\b_unknown.paa", [0,0.3,0.6,0.5], visiblePosition _x, 1, 1, 0];
 							};
 							case east: {
-								drawIcon3D ["\A3\ui_f\data\map\Markers\NATO\o_unknown.paa", [0.5,0,0,0.5], visiblePositionASL _x, 1, 1, 0];
+								drawIcon3D ["\A3\ui_f\data\map\Markers\NATO\o_unknown.paa", [0.5,0,0,0.5], visiblePosition _x, 1, 1, 0];
 							};
 							case independent: {
-								drawIcon3D ["\A3\ui_f\data\map\Markers\NATO\n_unknown.paa", [0,0.5,0,0.5], visiblePositionASL _x, 1, 1, 0];
+								drawIcon3D ["\A3\ui_f\data\map\Markers\NATO\n_unknown.paa", [0,0.5,0,0.5], visiblePosition _x, 1, 1, 0];
 							};
 						};
 					};
@@ -49,6 +49,12 @@ if (A3G_Spectatorcam_set_showUI) then {
 			};
 		};
 	} foreach allUnits;
+
+	if (A3G_Spectatorcam_var_inSelectionMode) then {
+		if (!(isNil "A3G_Spectatorcam_var_currentSelection") && !(isNull A3G_Spectatorcam_var_currentSelection)) then {
+			drawIcon3D ["\a3\ui_f\data\map\Markers\Military\circle_ca.paa", [1,1,1,1], (A3G_Spectatorcam_var_currentSelection  selectionPosition "pelvis") vectorAdd (visiblePosition A3G_Spectatorcam_var_currentSelection), 1.5, 1.5, 0, "", 0, 0.04, "PuristaBold"];
+		};
+	};
 } else {
 	cameraEffectEnableHUD false;
 };
