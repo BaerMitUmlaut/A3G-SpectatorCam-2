@@ -11,7 +11,7 @@ class CfgVehicles {
 	class A3G_moduleSpectatorcamSettings: Module_F {
 		scope = 2;
 		displayName = "Spectatorcam Settings";
-		icon = "\A3G-Spectatorcam-2\UI\iconModule.paa";
+		icon = "\b\a3g_spectatorcam\addons\main\UI\iconModule.paa";
 		category = "A3G_Spectatorcam";
 		function = "A3G_Spectatorcam_fnc_initModule";
 		functionPriority = 1;

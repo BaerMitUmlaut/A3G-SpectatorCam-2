@@ -1,5 +1,3 @@
-#define ROW(NUMBER) y = safezoneY + 0.1 * (4/3) + 0.12 + NUMBER * 0.07;
-
 class dlgA3GSpectatorcamBase {
 	idd = -1;
 	onLoad = "[true] call A3G_Spectatorcam_fnc_enableBlur; A3G_Spectatorcam_var_dialogOpen = true;";
@@ -128,7 +126,7 @@ class ctrlA3GSpectatorcamHeader {
 };
 
 class ctrlA3GSpectatorcamFooter : ctrlA3GSpectatorcamText {
-	text = QUOTE(A3G Spectatorcam A3G_SPECTATORCAM_VERSION);
+	text = QUOTE(A3G Spectatorcam VERSION);
 	style = 2;
 	SizeEx = 0.04;
 	h = 0.05;

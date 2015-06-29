@@ -1,0 +1,11 @@
+#define PREFIX a3g_spectatorcam
+
+#define MAJOR 2
+#define MINOR 0
+#define PATCHLVL 0
+#define BUILD 0
+
+#define VERSION MAJOR.MINOR.PATCHLVL.BUILD
+#define VERSION_AR MAJOR,MINOR,PATCHLVL,BUILD
+
+#define REQUIRED_VERSION 0.1

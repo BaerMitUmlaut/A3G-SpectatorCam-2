@@ -1,6 +1,6 @@
 private ["_movementDelta", "_heightATL", "_newPos"];
 
-#include "dikCodes.h"
+#include "\b\a3g_spectatorcam\addons\main\dikCodes.hpp"
 
 //Handle camera movement
 _movementDelta = [0, 0, 0];

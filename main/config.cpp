@@ -1,21 +1,21 @@
+#include "script_component.hpp"
+
 class CfgPatches {
-	class A3G_Spectatorcam {
+	class ADDON {
 		units[] = {};
 		weapons[] = {};
 		requiredVersion = 1.1;
 		requiredAddons[] = {"CBA_Main"};
-		version = "2.0";
-		versionStr = "2.0";
-		versionAr[] = {2,0};
 		author[] = {"BaerMitUmlaut"};
 		authorUrl = "https://github.com/BaerMitUmlaut";
+		VERSION_CONFIG;
 	};
 };
 
 class CfgFunctions {
 	class A3G_Spectatorcam {
-		class A3G_Spectatorcam {
-			file="\A3G-Spectatorcam-2\functions";
+		class Functions {
+			file="\b\a3g_spectatorcam\addons\main\functions";
 			class calcVectorDirAndUp {};
 			class drawMap {};
 			class drawUI {};
@@ -38,9 +38,6 @@ class CfgFunctions {
 		};
 	};
 };
-
-#define A3G_SPECTATORCAM_VERSION 2.0
-#define QUOTE(VAR) #VAR
 
 #include "CfgVehicles.hpp"
 #include "Dialog.hpp"

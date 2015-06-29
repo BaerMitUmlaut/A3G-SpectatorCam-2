@@ -1,6 +1,6 @@
 private ["_corpse", "_displayMission", "_control", "_layers", "_i"];
 
-#include "dikCodes.h"
+#include "\b\a3g_spectatorcam\addons\main\dikCodes.hpp"
 
 _corpse = _this select 0;
 
@@ -70,6 +70,12 @@ A3G_Spectatorcam_var_onKeyDown set [DIK_SPACE, {
 			A3G_Spectatorcam_var_inSelectionMode = true;
 			createDialog "dlgA3GSpectatorcamDummy";
 		};
+	};
+}];
+A3G_Spectatorcam_var_onKeyDown set [DIK_ESCAPE, {
+	0 spawn {
+		waitUntil {!(isNull (findDisplay 49))};
+		(findDisplay 49) displayCtrl 1010 ctrlEnable false;
 	};
 }];
 
