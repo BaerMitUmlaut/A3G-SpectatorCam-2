@@ -1,7 +1,7 @@
 @echo off
 echo Information
 echo -----------
-echo This build will not contain a binarized config, but will work without a P: drive setup. It is recommended to use a P: drive setup if possible.
+echo This build will not contain a binarized config which result in longer in-game loading times, but will work without a P: drive setup. It is recommended to use a P: drive setup if possible.
 echo.
 pause
 set pathCurrent=%~dp0
