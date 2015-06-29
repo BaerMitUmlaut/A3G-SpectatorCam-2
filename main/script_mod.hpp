@@ -1,3 +1,4 @@
+#define MAINPREFIX b
 #define PREFIX a3g_spectatorcam
 
 #define MAJOR 2
