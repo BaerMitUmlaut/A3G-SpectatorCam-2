@@ -4,5 +4,6 @@
 #define GSET(var1) DOUBLES(DOUBLES(ADDON,set),var1)
 
 #define DLG(var1) dlgA3GSpectatorcam##var1
+#define QDLG(var1) QUOTE(DLG(var1))
 #define CTRL(var1) ctrlA3GSpectatorcam##var1
 #define ROW(NUMBER) y = safezoneY + 0.1 * (4/3) + 0.12 + NUMBER * 0.07;

@@ -1,10 +1,11 @@
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
 private ["_unit"];
 
 _unit = _this select 0;
 
-A3G_Spectatorcam_var_cameraDir = direction _unit;
-A3G_Spectatorcam_var_cameraPitch = -45;
-A3G_Spectatorcam_var_vectorDirAndUp = [A3G_Spectatorcam_var_cameraDir, A3G_Spectatorcam_var_cameraPitch] call A3G_Spectatorcam_fnc_calcVectorDirAndUp;
-A3G_Spectatorcam_var_vectorDir = A3G_Spectatorcam_var_vectorDirAndUp select 0;
+GVAR(cameraDir) = direction _unit;
+GVAR(cameraPitch) = -45;
+GVAR(vectorDirAndUp) = [GVAR(cameraDir), GVAR(cameraPitch)] call FUNC(calcVectorDirAndUp);
+GVAR(vectorDir) = GVAR(vectorDirAndUp) select 0;
 
-A3G_Spectatorcam_var_cameraObject setPosATL (_unit modelToWorld [0, -2.5, 3]);
+GVAR(cameraObject) setPosATL (_unit modelToWorld [0, -2.5, 3]);

@@ -1,3 +1,4 @@
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
 private ["_dialog", "_sliderViewDistance", "_sliderObjectViewDistance"];
 
 _display = _this select 0;

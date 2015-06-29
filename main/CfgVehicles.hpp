@@ -13,7 +13,7 @@ class CfgVehicles {
 		displayName = "Spectatorcam Settings";
 		icon = "\b\a3g_spectatorcam\addons\main\UI\iconModule.paa";
 		category = "A3G_Spectatorcam";
-		function = "A3G_Spectatorcam_fnc_initModule";
+		function = "A3G_Spectatorcam_main_fnc_initModule";
 		functionPriority = 1;
 		isGlobal = 1;
 		isTriggerActivated = 0;

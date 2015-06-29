@@ -14,6 +14,7 @@ class CfgPatches {
 
 class CfgFunctions {
 	class A3G_Spectatorcam {
+		tag = "A3G_Spectatorcam_main";
 		class Functions {
 			file="\b\a3g_spectatorcam\addons\main\functions";
 			class calcVectorDirAndUp {};

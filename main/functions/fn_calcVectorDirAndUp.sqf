@@ -14,6 +14,9 @@
  *
  */
 
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
+private ["_dir", "_pitch", "_vecdx", "_vecdy", "_vecdz", "_vecuz"];
+
 _dir = _this select 0;
 _pitch = _this select 1;
 

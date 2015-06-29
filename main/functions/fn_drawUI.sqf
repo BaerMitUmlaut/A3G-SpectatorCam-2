@@ -1,12 +1,13 @@
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
 private ["_drawColor", "_text"];
 
-if (A3G_Spectatorcam_set_showUI) then {
+if (GSET(showUI)) then {
 	showCinemaBorder false;
 	cameraEffectEnableHUD true;
 	{
 		if !(side group _x == civilian) then {
-			if (A3G_Spectatorcam_set_markEnemies || A3G_Spectatorcam_var_playerSide getFriend (side group _x) > 0.6) then {
-				if (A3G_Spectatorcam_var_cameraObject distance _x < 500) then {
+			if (GSET(markEnemies) || GVAR(playerSide) getFriend (side group _x) > 0.6) then {
+				if (GVAR(cameraObject) distance _x < 500) then {
 					_drawColor = [0,0,0,0];
 					switch (side group _x) do {
 						case west: {
@@ -20,7 +21,7 @@ if (A3G_Spectatorcam_set_showUI) then {
 						};
 					};
 
-					if (isPlayer _x && A3G_Spectatorcam_var_cameraObject distance _x < 20) then {
+					if (isPlayer _x && GVAR(cameraObject) distance _x < 20) then {
 						_text = name _x;
 					} else {
 						_text = "";
@@ -50,9 +51,9 @@ if (A3G_Spectatorcam_set_showUI) then {
 		};
 	} foreach allUnits;
 
-	if (A3G_Spectatorcam_var_inSelectionMode) then {
-		if (!(isNil "A3G_Spectatorcam_var_currentSelection") && !(isNull A3G_Spectatorcam_var_currentSelection)) then {
-			drawIcon3D ["\a3\ui_f\data\map\Markers\Military\circle_ca.paa", [1,1,1,1], (A3G_Spectatorcam_var_currentSelection  selectionPosition "pelvis") vectorAdd (visiblePosition A3G_Spectatorcam_var_currentSelection), 1.5, 1.5, 0, "", 0, 0.04, "PuristaBold"];
+	if (GVAR(inSelectionMode)) then {
+		if (!(isNil QGVAR(currentSelection)) && !(isNull GVAR(currentSelection))) then {
+			drawIcon3D ["\a3\ui_f\data\map\Markers\Military\circle_ca.paa", [1,1,1,1], (GVAR(currentSelection) selectionPosition "pelvis") vectorAdd (visiblePosition GVAR(currentSelection)), 1.5, 1.5, 0, "", 0, 0.04, "PuristaBold"];
 		};
 	};
 } else {

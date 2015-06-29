@@ -1,10 +1,11 @@
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
 private ["_map", "_drawColor", "_text"];
 
 _map = _this select 0;
 
 {
 	if !(side group _x == civilian) then {
-		if (A3G_Spectatorcam_set_markEnemies || A3G_Spectatorcam_var_playerSide getFriend (side group _x) > 0.6) then {
+		if (GSET(markEnemies) || GVAR(playerSide) getFriend (side group _x) > 0.6) then {
 			_drawColor = [0,0,0,0];
 			switch (side group _x) do {
 				case west: {
@@ -18,7 +19,7 @@ _map = _this select 0;
 				};
 			};
 
-			if (isPlayer _x && A3G_Spectatorcam_var_cameraObject distance _x < 20) then {
+			if (isPlayer _x && GVAR(cameraObject) distance _x < 20) then {
 				_text = name _x;
 			} else {
 				_text = "";

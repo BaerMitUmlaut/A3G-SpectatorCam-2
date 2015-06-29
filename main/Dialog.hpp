@@ -1,7 +1,7 @@
 class dlgA3GSpectatorcamBase {
 	idd = -1;
-	onLoad = "[true] call A3G_Spectatorcam_fnc_enableBlur; A3G_Spectatorcam_var_dialogOpen = true;";
-	onUnload = "[false] call A3G_Spectatorcam_fnc_enableBlur; A3G_Spectatorcam_var_dialogOpen = false;";
+	onLoad = "[true] call A3G_Spectatorcam_main_fnc_enableBlur; A3G_Spectatorcam_main_dialogOpen = true;";
+	onUnload = "[false] call A3G_Spectatorcam_main_fnc_enableBlur; A3G_Spectatorcam_main_dialogOpen = false;";
 	movingEnable = false;
 	enableSimulation = 1;
 	
@@ -25,9 +25,9 @@ class dlgA3GSpectatorcamBase {
 };
 
 class dlgA3GSpectatorcamDummy {
-	onLoad = "A3G_Spectatorcam_var_dialogOpen = true; setMousePosition [0.5, 0.5];";
-	onUnload = "A3G_Spectatorcam_var_dialogOpen = false;";
-	onKeyUp = "if ((_this select 1) == 57) then {A3G_Spectatorcam_var_inSelectionMode = false; closeDialog 0;};";
+	onLoad = "A3G_Spectatorcam_main_dialogOpen = true; setMousePosition [0.5, 0.5];";
+	onUnload = "A3G_Spectatorcam_main_dialogOpen = false;";
+	onKeyUp = "if ((_this select 1) == 57) then {A3G_Spectatorcam_main_inSelectionMode = false; closeDialog 0;};";
 	idd = -1;
 	movingEnable = false;
 	enableSimulation = 1;
@@ -66,8 +66,8 @@ class dlgA3GSpectatorcamDummy {
 		soundClick[] = {"",0.1,1};
 		soundEscape[] = {"",0.1,1};
 		default = false;
-		onMouseButtonUp = "_this call A3G_Spectatorcam_fnc_onSelection";
-		onMouseMoving = "_this call A3G_Spectatorcam_fnc_onMouseMovingSelectionMode";
+		onMouseButtonUp = "_this call A3G_Spectatorcam_main_fnc_onSelection";
+		onMouseMoving = "_this call A3G_Spectatorcam_main_fnc_onMouseMovingSelectionMode";
 	};
 };
 
@@ -292,8 +292,8 @@ class ctrlA3GSpectatorcamBGMap {
 };
 
 class dlgA3GSpectatorcamMap : dlgA3GSpectatorcamBase {
-	onLoad = "[true] call A3G_Spectatorcam_fnc_enableBlur; _this call A3G_Spectatorcam_fnc_initDialogMap; A3G_Spectatorcam_var_dialogOpen = true;";
-	onUnload = "[false] call A3G_Spectatorcam_fnc_enableBlur; A3G_Spectatorcam_var_dialogOpen = false;";
+	onLoad = "[true] call A3G_Spectatorcam_main_fnc_enableBlur; _this call A3G_Spectatorcam_main_fnc_initDialogMap; A3G_Spectatorcam_main_dialogOpen = true;";
+	onUnload = "[false] call A3G_Spectatorcam_main_fnc_enableBlur; A3G_Spectatorcam_main_dialogOpen = false;";
 
 
 	controlsBackground[] = {
@@ -320,7 +320,7 @@ class dlgA3GSpectatorcamMap : dlgA3GSpectatorcamBase {
 		ROW(3)
 		h = safezoneH / 2;
 		idc = 1;
-		onLBSelChanged = "_this call A3G_Spectatorcam_fnc_onPlayerLBSelect";
+		onLBSelChanged = "_this call A3G_Spectatorcam_main_fnc_onPlayerLBSelect";
 	};
 
 	class ctrlMap : ctrlA3GSpectatorcamMap {
@@ -329,8 +329,8 @@ class dlgA3GSpectatorcamMap : dlgA3GSpectatorcamBase {
 		x = safezoneX + 0.1;
 		y = safezoneY + 0.1 * (4/3);
 		idc = 2;
-		onDraw = "_this call A3G_Spectatorcam_fnc_drawMap";
-		onMouseButtonClick = "_this call A3G_Spectatorcam_fnc_onMapClick";
+		onDraw = "_this call A3G_Spectatorcam_main_fnc_drawMap";
+		onMouseButtonClick = "_this call A3G_Spectatorcam_main_fnc_onMapClick";
 	};
 
 	class ctrlBGMap : ctrlA3GSpectatorcamBGMap {
@@ -342,8 +342,8 @@ class dlgA3GSpectatorcamMap : dlgA3GSpectatorcamBase {
 };
 
 class dlgA3GSpectatorcamPreferences : dlgA3GSpectatorcamBase {
-	onLoad = "[true] call A3G_Spectatorcam_fnc_enableBlur; _this call A3G_Spectatorcam_fnc_initDialogPreferences; A3G_Spectatorcam_var_dialogOpen = true;";
-	onUnload = "[false] call A3G_Spectatorcam_fnc_enableBlur; A3G_Spectatorcam_var_dialogOpen = false;";
+	onLoad = "[true] call A3G_Spectatorcam_main_fnc_enableBlur; _this call A3G_Spectatorcam_main_fnc_initDialogPreferences; A3G_Spectatorcam_main_dialogOpen = true;";
+	onUnload = "[false] call A3G_Spectatorcam_main_fnc_enableBlur; A3G_Spectatorcam_main_dialogOpen = false;";
 
 	controlsBackground[] = {
 		background,
@@ -371,7 +371,7 @@ class dlgA3GSpectatorcamPreferences : dlgA3GSpectatorcamBase {
 	class ctrlSliderPreferencesView : ctrlA3GSpectatorcamSlider {
 		idc = 1;
 		ROW(1)
-		onSliderPosChanged = "_this call A3G_Spectatorcam_fnc_onSliderVDChange";
+		onSliderPosChanged = "_this call A3G_Spectatorcam_main_fnc_onSliderVDChange";
 	};
 
 	class ctrlTextPreferencesObject : ctrlA3GSpectatorcamText {
@@ -382,7 +382,7 @@ class dlgA3GSpectatorcamPreferences : dlgA3GSpectatorcamBase {
 	class ctrlSliderPreferencesObject : ctrlA3GSpectatorcamSlider {
 		idc = 2;
 		ROW(4)
-		onSliderPosChanged = "_this call A3G_Spectatorcam_fnc_onSliderOVDChange";
+		onSliderPosChanged = "_this call A3G_Spectatorcam_main_fnc_onSliderOVDChange";
 	};
 
 	class ctrlTextPreferencesFocus : ctrlA3GSpectatorcamText {

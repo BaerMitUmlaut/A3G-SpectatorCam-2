@@ -1,11 +1,12 @@
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
 private ["_logic"];
 
 _logic = _this select 0;
 
-A3G_Spectatorcam_set_hideRespawned = _logic getVariable "hideRespawned";
-A3G_Spectatorcam_set_markEnemies = _logic getVariable "markEnemies";
-A3G_Spectatorcam_set_allowChatting = _logic getVariable "allowChatting";
-A3G_Spectatorcam_set_endMission = _logic getVariable "endMission";
+GSET(hideRespawned) = _logic getVariable "hideRespawned";
+GSET(markEnemies) = _logic getVariable "markEnemies";
+GSET(allowChatting) = _logic getVariable "allowChatting";
+GSET(endMission) = _logic getVariable "endMission";
 
 if (!isServer && !hasInterface) exitWith {};
 if (isServer) then {
@@ -19,6 +20,6 @@ if (isServer) then {
 if (hasInterface) then {
 	0 spawn {
 		sleep 1;
-		player addEventHandler ["Respawn", A3G_Spectatorcam_fnc_handleRespawn];
+		player addEventHandler ["Respawn", FUNC(handleRespawn)];
 	};
 };

@@ -1,3 +1,4 @@
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
 private ["_listbox", "_index", "_player", "_unit"];
 
 _listbox = _this select 0;
@@ -14,7 +15,7 @@ _player = _listbox lbText _index;
 if (isNil "_unit" || isNull _unit) then {
 	_listbox lbDelete _index;
 } else {
-	[_unit] call A3G_Spectatorcam_fnc_focusUnit;
+	[_unit] call FUNC(focusUnit);
 	closeDialog 0;
 };
 

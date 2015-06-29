@@ -1,6 +1,6 @@
-private ["_corpse", "_displayMission", "_control", "_layers", "_i"];
-
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
 #include "\b\a3g_spectatorcam\addons\main\dikCodes.hpp"
+private ["_corpse", "_displayMission", "_control", "_layers", "_i"];
 
 _corpse = _this select 0;
 
@@ -22,57 +22,57 @@ clearradio;
 enableradio false;
 
 //Create camera object
-A3G_Spectatorcam_var_cameraDir = direction _corpse;
-A3G_Spectatorcam_var_cameraPitch = -45;
-A3G_Spectatorcam_var_cameraObject = "camera" camCreate (_corpse modelToWorld [0, -2.5, 3]);
-A3G_Spectatorcam_var_vectorDirAndUp = [A3G_Spectatorcam_var_cameraDir, A3G_Spectatorcam_var_cameraPitch] call A3G_Spectatorcam_fnc_calcVectorDirAndUp;
-A3G_Spectatorcam_var_vectorDir = A3G_Spectatorcam_var_vectorDirAndUp select 0;
-A3G_Spectatorcam_var_cameraObject setVectorDirAndUp A3G_Spectatorcam_var_vectorDirAndUp;
-A3G_Spectatorcam_var_cameraObject cameraEffect ["External", "BACK"];
-A3G_Spectatorcam_var_cameraObject camCommit 0;
+GVAR(cameraDir) = direction _corpse;
+GVAR(cameraPitch) = -45;
+GVAR(cameraObject) = "camera" camCreate (_corpse modelToWorld [0, -2.5, 3]);
+GVAR(vectorDirAndUp) = [GVAR(cameraDir), GVAR(cameraPitch)] call FUNC(calcVectorDirAndUp);
+GVAR(vectorDir) = GVAR(vectorDirAndUp) select 0;
+GVAR(cameraObject) setVectorDirAndUp GVAR(vectorDirAndUp);
+GVAR(cameraObject) cameraEffect ["External", "BACK"];
+GVAR(cameraObject) camCommit 0;
 
-A3G_Spectatorcam_var_unblockedKeys = [DIK_ESCAPE];
-if (A3G_Spectatorcam_set_allowChatting) then {
-	A3G_Spectatorcam_var_unblockedKeys append (actionKeys "Chat");
-	A3G_Spectatorcam_var_unblockedKeys append (actionKeys "NextChannel");
-	A3G_Spectatorcam_var_unblockedKeys append (actionKeys "PrevChannel");
+GVAR(unblockedKeys) = [DIK_ESCAPE];
+if (GSET(allowChatting)) then {
+	GVAR(unblockedKeys) append (actionKeys "Chat");
+	GVAR(unblockedKeys) append (actionKeys "NextChannel");
+	GVAR(unblockedKeys) append (actionKeys "PrevChannel");
 };
-A3G_Spectatorcam_var_dialogOpen = false;
-A3G_Spectatorcam_var_inSelectionMode = false;
+GVAR(dialogOpen) = false;
+GVAR(inSelectionMode) = false;
 
-A3G_Spectatorcam_var_onKeyDown = [];
-A3G_Spectatorcam_var_onKeyDown set [0xED, {}];
+GVAR(onKeyDown) = [];
+GVAR(onKeyDown) set [0xED, {}];
 for "_i" from 0 to 0xEC do {
-	A3G_Spectatorcam_var_onKeyDown set [_i, {}];
+	GVAR(onKeyDown) set [_i, {}];
 };
 
-A3G_Spectatorcam_var_onKeyDown set [DIK_U, {A3G_Spectatorcam_set_showUI = !A3G_Spectatorcam_set_showUI;}];
-A3G_Spectatorcam_var_onKeyDown set [DIK_M, {
-	if (!A3G_Spectatorcam_var_dialogOpen) then {
-		createDialog "dlgA3GSpectatorcamMap";
+GVAR(onKeyDown) set [DIK_U, {GSET(showUI) = !GSET(showUI);}];
+GVAR(onKeyDown) set [DIK_M, {
+	if (!GVAR(dialogOpen)) then {
+		createDialog QDLG(Map);
 	};
 }];
-A3G_Spectatorcam_var_onKeyDown set [DIK_P, {
-	if (!A3G_Spectatorcam_var_dialogOpen) then {
-		createDialog "dlgA3GSpectatorcamPreferences";
+GVAR(onKeyDown) set [DIK_P, {
+	if (!GVAR(dialogOpen)) then {
+		createDialog QDLG(Preferences);
 	};
 }];
-A3G_Spectatorcam_var_onKeyDown set [DIK_H, {
-	if (!A3G_Spectatorcam_var_dialogOpen) then {
-		createDialog "dlgA3GSpectatorcamHelp";
+GVAR(onKeyDown) set [DIK_H, {
+	if (!GVAR(dialogOpen)) then {
+		createDialog QDLG(Help);
 	};
 }];
-A3G_Spectatorcam_var_onKeyDown set [DIK_SPACE, {
-	if (!A3G_Spectatorcam_var_inSelectionMode) then {
+GVAR(onKeyDown) set [DIK_SPACE, {
+	if (!GVAR(inSelectionMode)) then {
 		//once the dummy dialog closes, Arma will send a new onKeyDown event for space
 		//by only changing inSelectionMode on the next keyUp, we can circumvent accidentally opening the dialog again
-		if (!A3G_Spectatorcam_var_dialogOpen) then {
-			A3G_Spectatorcam_var_inSelectionMode = true;
-			createDialog "dlgA3GSpectatorcamDummy";
+		if (!GVAR(dialogOpen)) then {
+			GVAR(inSelectionMode) = true;
+			createDialog QDLG(Dummy);
 		};
 	};
 }];
-A3G_Spectatorcam_var_onKeyDown set [DIK_ESCAPE, {
+GVAR(onKeyDown) set [DIK_ESCAPE, {
 	0 spawn {
 		waitUntil {!(isNull (findDisplay 49))};
 		(findDisplay 49) displayCtrl 1010 ctrlEnable false;
@@ -80,30 +80,30 @@ A3G_Spectatorcam_var_onKeyDown set [DIK_ESCAPE, {
 }];
 
 (findDisplay 46) displayAddEventHandler ["KeyDown", {
-	A3G_Spectatorcam_var_pressedKeys set [(_this select 1), true];
-	[] call (A3G_Spectatorcam_var_onKeyDown select (_this select 1));
+	GVAR(pressedKeys) set [(_this select 1), true];
+	[] call (GVAR(onKeyDown) select (_this select 1));
 
-	if ((_this select 1) in A3G_Spectatorcam_var_unblockedKeys) exitWith {false};
+	if ((_this select 1) in GVAR(unblockedKeys)) exitWith {false};
 	true
 }];
 
-A3G_Spectatorcam_var_onKeyUp = [];
-A3G_Spectatorcam_var_onKeyUp set [0xED, {}];
+GVAR(onKeyUp) = [];
+GVAR(onKeyUp) set [0xED, {}];
 for "_i" from 0 to 0xEC do {
-	A3G_Spectatorcam_var_onKeyUp set [_i, {}];
+	GVAR(onKeyUp) set [_i, {}];
 };
 
-A3G_Spectatorcam_var_onKeyUp set [DIK_SPACE, {
-	if (A3G_Spectatorcam_var_inSelectionMode) then {
-		A3G_Spectatorcam_var_inSelectionMode = false;
+GVAR(onKeyUp) set [DIK_SPACE, {
+	if (GVAR(inSelectionMode)) then {
+		GVAR(inSelectionMode) = false;
 	};
 }];
 
 (findDisplay 46) displayAddEventHandler ["KeyUp", {
-	A3G_Spectatorcam_var_pressedKeys set [(_this select 1), false];
-	[] call (A3G_Spectatorcam_var_onKeyUp select (_this select 1));
+	GVAR(pressedKeys) set [(_this select 1), false];
+	[] call (GVAR(onKeyUp) select (_this select 1));
 
-	if ((_this select 1) in A3G_Spectatorcam_var_unblockedKeys || A3G_Spectatorcam_var_dialogOpen) then {
+	if ((_this select 1) in GVAR(unblockedKeys) || GVAR(dialogOpen)) then {
 		false
 	} else {
 		true
@@ -112,23 +112,23 @@ A3G_Spectatorcam_var_onKeyUp set [DIK_SPACE, {
 
 (findDisplay 46) displayAddEventHandler ["MouseMoving", {
 	private ["_deltaX", "_deltaY"];
-	if (!A3G_Spectatorcam_var_dialogOpen) then {
+	if (!GVAR(dialogOpen)) then {
 		_deltaX = _this select 1;
 		_deltaY = _this select 2;
-		A3G_Spectatorcam_var_cameraDir = A3G_Spectatorcam_var_cameraDir + _deltaX;
-		A3G_Spectatorcam_var_cameraPitch = -89 max (89 min (A3G_Spectatorcam_var_cameraPitch - _deltaY));
-		A3G_Spectatorcam_var_vectorDirAndUp = [A3G_Spectatorcam_var_cameraDir, A3G_Spectatorcam_var_cameraPitch] call A3G_Spectatorcam_fnc_calcVectorDirAndUp;
-		A3G_Spectatorcam_var_vectorDir = A3G_Spectatorcam_var_vectorDirAndUp select 0;
+		GVAR(cameraDir) = GVAR(cameraDir) + _deltaX;
+		GVAR(cameraPitch) = -89 max (89 min (GVAR(cameraPitch) - _deltaY));
+		GVAR(vectorDirAndUp) = [GVAR(cameraDir), GVAR(cameraPitch)] call FUNC(calcVectorDirAndUp);
+		GVAR(vectorDir) = GVAR(vectorDirAndUp) select 0;
 	};
 }];
 
-A3G_Spectatorcam_var_pressedKeys = [];
-A3G_Spectatorcam_var_pressedKeys set [0xED, false];
+GVAR(pressedKeys) = [];
+GVAR(pressedKeys) set [0xED, false];
 for "_i" from 0 to 0xEC do {
-	A3G_Spectatorcam_var_pressedKeys set [_i, false];
+	GVAR(pressedKeys) set [_i, false];
 };
 
-A3G_Spectatorcam_set_showUI = true;
+GSET(showUI) = true;
 
-A3G_Spectatorcam_var_pfhHandleControls = [A3G_Spectatorcam_fnc_handleControls, 0, []] call CBA_fnc_addPerFrameHandler;
-A3G_Spectatorcam_var_ehHDrawUI = addMissionEventHandler ["Draw3D", A3G_Spectatorcam_fnc_drawUI];
+GVAR(pfhHandleControls) = [FUNC(handleControls), 0, []] call CBA_fnc_addPerFrameHandler;
+GVAR(ehHDrawUI) = addMissionEventHandler ["Draw3D", FUNC(drawUI)];

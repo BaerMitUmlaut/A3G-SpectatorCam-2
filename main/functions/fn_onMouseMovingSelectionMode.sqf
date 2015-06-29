@@ -1,3 +1,4 @@
+#include "\b\a3g_spectatorcam\addons\main\script_component.hpp"
 private ["_screenPosSelection", "_screenPosUnits", "_screenPosCurrent", "_absDistance"];
 
 _screenPosSelection = [(_this select 1), (_this select 2), 0];
@@ -15,12 +16,12 @@ _screenPosUnits = [];
 if (count _screenPosUnits > 0) then {
 	_screenPosUnits sort true;
 	if (((_screenPosUnits select 0) select 0) < (0.05 * safeZoneW)) then {
-		A3G_Spectatorcam_var_currentSelection = (_screenPosUnits select 0) select 1;
+		GVAR(currentSelection) = (_screenPosUnits select 0) select 1;
 	} else {
-		A3G_Spectatorcam_var_currentSelection = objNull;
+		GVAR(currentSelection) = objNull;
 	};
 } else {
-	A3G_Spectatorcam_var_currentSelection = objNull;
+	GVAR(currentSelection) = objNull;
 };
 
 true
